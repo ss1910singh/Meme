@@ -26,6 +26,7 @@ export default function Home() {
   const [filepath, setFilepath] = useState("");
   return (
     <div className="App">
+      <button>click me</button>
       <ImageKitProvider 
       publicKey={publicKey} 
       urlEndpoint={urlEndpoint} 
