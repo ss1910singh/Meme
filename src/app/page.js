@@ -1,6 +1,7 @@
 'use client'; 
 // import { IKImage, IKVideo, ImageKitProvider, IKUpload, ImageKitContext } from "imagekitio-next";
-import { IKUpload, ImageKitProvider } from "imagekitio-next";
+import { IKImage, IKUpload, ImageKitProvider } from "imagekitio-next";
+import { useState } from "react";
 
 const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 const authenticator = async () => {
@@ -22,17 +23,32 @@ const authenticator = async () => {
 
 const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
 export default function Home() {
+  const [filepath, setFilepath] = useState("");
   return (
     <div className="App">
-      <h1>ImageKit Next.js quick start</h1>
-      <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}>
+      <ImageKitProvider 
+      publicKey={publicKey} 
+      urlEndpoint={urlEndpoint} 
+      authenticator={authenticator}>
+        
+        <div className="relative large-dimension">
+          {filepath &&
+            <IKImage 
+            width={400}
+            height={500}
+            path={filepath} 
+            alt="Alt text" />
+          }
+        </div>
+
         <div>
           <h2>File upload</h2>
           <IKUpload fileName="test-upload.png" 
-          onError={(error) => console.error("Upload failed", error)} 
-          onSuccess={(response) => console.log("Upload successful", response)} 
+          onError={(error) => {console.error("Upload failed", error)}}
+          onSuccess={(response) => {console.log("Upload successful", response); setFilepath(response.filePath)}}
           />
         </div>
+
       </ImageKitProvider>
     </div>
   );
