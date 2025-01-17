@@ -6,7 +6,7 @@ import { useState } from "react";
 const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 const authenticator = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/auth");
+    const response = await fetch("http://localhost:3000/api/auth");
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -26,7 +26,6 @@ export default function Home() {
   const [filepath, setFilepath] = useState("");
   return (
     <div className="App">
-      <button>click me</button>
       <ImageKitProvider 
       publicKey={publicKey} 
       urlEndpoint={urlEndpoint} 
